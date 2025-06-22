@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grow A Garden API</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/YOUR_KIT.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="assets/favicon.png">
+  <style>
+    .glass {
+      background: rgba(31, 41, 55, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen font-sans">
+
+  <div class="max-w-5xl mx-auto p-6">
+    <header class="text-center mb-12">
+      <h1 class="text-5xl font-extrabold mb-4 text-green-400 drop-shadow flex justify-center items-center gap-3">
+        <i class="fas fa-leaf fa-lg"></i> Grow A Garden API
+      </h1>
+      <p class="text-lg text-gray-300">Explore live garden stock data programmatically or visually.</p>
+    </header>
+
+    <!-- ✅ Improved Button Layout -->
+    <section class="mb-12">
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="/dash" class="px-6 py-4 bg-green-500 hover:bg-green-600 rounded-xl font-semibold shadow-xl transition transform hover:scale-105 inline-flex items-center gap-3 text-lg">
+          <i class="fas fa-chart-line"></i> View Live Dashboard
+        </a>
+        <a href="/grow-a-garden" class="px-6 py-4 bg-blue-500 hover:bg-blue-600 rounded-xl font-semibold shadow-xl transition transform hover:scale-105 inline-flex items-center gap-3 text-lg">
+          <i class="fas fa-plug"></i> API Endpoint
+        </a>
+      </div>
+    </section>
+
+    <!-- 📘 API Documentation -->
+    <section class="glass p-6 rounded-2xl shadow-lg">
+      <h2 class="text-2xl font-bold mb-4 text-green-300"><i class="fas fa-book mr-2"></i>API Documentation</h2>
+      <p class="mb-4 text-gray-300">Use the <code class="bg-gray-700 px-2 py-1 rounded">/grow-a-garden</code> endpoint to retrieve real-time stock data.</p>
+
+      <h3 class="text-lg font-semibold mb-2">📥 Example Response:</h3>
+      <div class="overflow-auto text-sm bg-gray-900 p-4 rounded-xl border border-gray-700 text-green-100">
+<pre>{
+  "status": "success",
+  "updated_at": "2025-06-15T10:22:33.123Z",
+  "data": {
+    "gear": {
+      "items": [
+        { "name": "Shovel", "quantity": 5, "image": null, "emoji": "🛠️" }
+      ],
+      "countdown": "00:10:00"
+    },
+    "egg": {
+      "items": [
+        { "name": "Mystery Egg", "quantity": 3, "image": null, "emoji": "🥚" }
+      ],
+      "countdown": "00:08:45"
+    },
+    "seed": {
+      "items": [
+        { "name": "Sunflower Seed", "quantity": 15, "image": null, "emoji": "🌻" }
+      ],
+      "countdown": "00:05:00"
+    },
+    "honey": {
+      "items": [
+        { "name": "Sweet Honey", "quantity": 7, "image": null, "emoji": "🍯" }
+      ],
+      "countdown": "00:02:30"
+    },
+    "cosmetics": {
+      "items": [
+        { "name": "Petal Hat", "quantity": 2, "image": null, "emoji": "🎩" }
+      ],
+      "countdown": "00:12:00"
+    },
+    "updated_at": "2025-06-15T10:22:33.123Z"
+  }
+}</pre>
+      </div>
+    </section>
+
+    <footer class="text-center mt-12 text-gray-500 text-sm">
+      &copy; 2025 Grow A Garden API. Built with 🌿 by Community.
+    </footer>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌱 Grow A Garden Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/YOUR_KIT.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="assets/favicon.png">
+  <style>
+    .glass {
+      background: rgba(31, 41, 55, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .fa-spin-once {
+      animation: spinOnce 0.8s linear;
+    }
+    @keyframes spinOnce {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen font-sans relative">
+
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <header class="flex items-center justify-between mb-10">
+      <h1 class="text-4xl font-extrabold flex items-center gap-3 text-green-400 drop-shadow">
+        <i class="fas fa-seedling"></i> Grow A Garden Live Dashboard
+      </h1>
+      <div>
+        <button id="refresh-btn" class="bg-gray-700 hover:bg-green-500 hover:text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md">
+          <i class="fas fa-sync-alt text-xl"></i>
+        </button>
+      </div>
+    </header>
+
+    <main id="dashboard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Cards get rendered here -->
+    </main>
+
+    <footer class="mt-12 text-center text-sm text-gray-400">
+      Last updated: <time id="last-updated">—</time>
+    </footer>
+  </div>
+
+  <script>
+    const refreshBtn = document.getElementById('refresh-btn');
+    const dashboard = document.getElementById('dashboard');
+    const updatedTime = document.getElementById('last-updated');
+
+    async function fetchData() {
+      try {
+        refreshBtn.classList.add("fa-spin-once");
+        const res = await fetch('/grow-a-garden');
+        if (!res.ok) throw new Error("Network error");
+        const json = await res.json();
+        renderDashboard(json.data);
+        updatedTime.textContent = new Date(json.updated_at).toLocaleString("en-PH", { timeZone: "Asia/Manila" });
+      } catch (e) {
+        alert("🚫 Failed to load data. Try again later.");
+        console.error(e);
+      } finally {
+        setTimeout(() => refreshBtn.classList.remove("fa-spin-once"), 800);
+      }
+    }
+
+    function renderDashboard(data) {
+      dashboard.innerHTML = '';
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'updated_at') return;
+        const card = document.createElement('div');
+        card.className = "glass p-5 rounded-xl shadow-lg transform transition hover:scale-[1.03] hover:shadow-2xl";
+        card.innerHTML = `
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold capitalize"><i class="fas fa-box-open mr-2 text-green-400"></i>${key}</h2>
+            <span class="text-sm text-gray-300">${value.countdown}</span>
+          </div>
+          <ul class="space-y-2">
+            ${value.items.map(item => `
+              <li class="flex items-center gap-3 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition">
+                ${item.image ? `<img src="${item.image}" class="w-8 h-8 rounded-full object-cover" />`
+                             : `<span class="text-2xl">${item.emoji}</span>`}
+                <div class="flex-1">
+                  <p class="font-medium">${item.name}</p>
+                </div>
+                <span class="text-sm text-green-300 font-mono">${item.quantity}</span>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+        dashboard.appendChild(card);
+      });
+    }
+
+    refreshBtn.addEventListener('click', fetchData);
+    fetchData();
+    setInterval(fetchData, 10000);
+  </script>
+</body>
+</html>
